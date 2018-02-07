@@ -1,0 +1,115 @@
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-4 col-lg-4">
+      <h1 class="my-4">Datasets</h1>
+      <div class="list-group">
+        <a href="#" class="list-group-item active">Dataset 1</a>
+        <a href="#" class="list-group-item">Dataset 2</a>
+        <a href="#" class="list-group-item">Dataset 3</a>
+      </div>
+    </div>
+    <!-- /.col-lg-3 -->
+
+    <div class="col-md-8 col-lg-8">
+      <div class="my-4">
+        <ngb-tabset type="pills">
+          <!-- Data Content -->
+          <ngb-tab title="Data">
+            <ng-template ngbTabContent>
+              <hr>
+              <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Title</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the title">
+                  <small id="emailHelp" class="form-text text-muted">Use the title to match the result.</small>
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelect1">Input 1</label>
+                  <select class="form-control" id="exampleSelect1">
+                    <option>0</option>
+                    <option>1</option>
+                  </select>
+                  <small id="emailHelp" class="form-text text-muted">The first entry of the data.</small>
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelect1">Input 2</label>
+                  <select class="form-control" id="exampleSelect1">
+                    <option>0</option>
+                    <option>1</option>
+                  </select>
+                  <small id="emailHelp" class="form-text text-muted">The second entry of the data.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelect1">Output</label>
+                    <select class="form-control" id="exampleSelect1">
+                      <option>0</option>
+                      <option>1</option>
+                    </select>
+                    <small id="emailHelp" class="form-text text-muted">The result of the data.</small>
+                  </div>
+                <hr>
+                <button type="submit" class="btn btn-success">Save Data</button>
+              </form>
+              <br>
+              <!--/end of content-->
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Train">
+            <ng-template ngbTabContent>
+              <!-- Train Content -->
+              <hr>
+              <ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
+              <hr>
+                <button type="submit" class="btn btn-success">Train Data</button>
+                <br>
+              <!--/end of content-->
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Test">
+            <ng-template ngbTabContent>
+              <!-- Test Content -->
+              <hr>
+              <form>
+              <div class="form-group">
+                  <label for="exampleSelect1">Input 1</label>
+                  <select name="input1" [(ngModel)]="input1" class="form-control" id="exampleSelect1">
+                    <option>0</option>
+                    <option>1</option>
+                  </select>
+                  <small id="emailHelp" class="form-text text-muted">The first entry of the data.</small>
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelect1">Input 2</label>
+                  <select name="input2" [(ngModel)]="input2" class="form-control" id="exampleSelect1">
+                    <option>0</option>
+                    <option>1</option>
+                  </select>
+                  <small id="emailHelp" class="form-text text-muted">The second entry of the data.</small>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-success" (click)="showResult()">Show the result</button><br><br>
+              </form>
+              <form>
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Result</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{output}}" disabled>
+                      <small id="emailHelp" class="form-text text-muted">This information is based in the train data.</small>
+                    </div>
+              </form>
+              <!-- /end of content-->
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col-lg-9 -->
+
+  </div>
+
+</div>
+<!-- /.container -->
