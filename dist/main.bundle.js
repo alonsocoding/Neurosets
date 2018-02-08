@@ -57,9 +57,9 @@ var AppRoutingModule = /** @class */ (function () {
 /***/ }),
 
 /***/ "./src/app/app.component.html":
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<!-- Navigation -->\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark fixed-top\">\n    <div class=\"container\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand\" href=\"#\">Neurosets</a>\n        </div>\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\" aria-controls=\"navbarResponsive\"\n            aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n        </button>\n        <div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">\n            <ul class=\"navbar-nav ml-auto\">\n                <li class=\"nav-item\">\n                    <a class=\"nav-link\" href=\"#\"><i class=\"fas fa-info-circle fa-lg\"></i></a>\n                </li>\n                <li class=\"nav-item\">\n                    <a class=\"nav-link\" href=\"#\"><i class=\"fab fa-github fa-lg\"></i></a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<!-- Content -->\n<router-outlet></router-outlet>\n\n<!-- Footer -->\n<footer class=\"py-4 bg-dark\">\n    <div class=\"container\">\n        <p class=\"m-0 text-center text-white\">Copyright &copy; alonsocoding 2018</p>\n    </div>\n    <!-- /.container -->\n</footer>";
+module.exports = "<!-- Navigation -->\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark fixed-top\">\n    <div class=\"container\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand\" href=\"#\"><img class=\"nav-logo\" src=\"" + __webpack_require__("./src/assets/icons/NEUROSETS-LOGO.png") + "\">Neurosets</a>\n        </div>\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\" aria-controls=\"navbarResponsive\"\n            aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n        </button>\n        <div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">\n            <ul class=\"navbar-nav ml-auto\">\n                <li class=\"nav-item\">\n                    <a class=\"nav-link\" href=\"#\" (click)=\"open(content)\"><i class=\"fas fa-info-circle fa-lg\"></i></a>\n                </li>\n                <li class=\"nav-item\">\n                    <a class=\"nav-link\" href=\"#\"><i class=\"fab fa-github fa-lg\"></i></a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<!-- Content -->\n<router-outlet></router-outlet>\n\n<!-- Footer -->\n<footer class=\"py-4 bg-dark\">\n    <div class=\"container\">\n        <p class=\"m-0 text-center text-white\">Developed by alonsocoding 2018</p>\n    </div>\n    <!-- /.container -->\n</footer>\n\n<!-- Info Modal --> \n\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\n    <div class=\"modal-header\">\n      <h4 class=\"modal-title\">Information</h4>\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n        <span aria-hidden=\"true\">&times;</span>\n      </button>\n    </div>\n    <div class=\"modal-body\">\n      <img class=\"info-logo\" src=\"" + __webpack_require__("./src/assets/icons/NEUROSETS-LOGO.png") + "\">\n      <h4>Neurosets v1.0.0</h4>\n      <p>Neural Networks multi-platform application</p>\n      <p>Developed by alonsocoding 2018</p>\n    </div>\n    <div class=\"modal-footer\">\n      <button type=\"button\" class=\"btn btn-dark\" (click)=\"c('Close click')\">Close</button>\n    </div>\n  </ng-template>\n\n<!-- / close modal -->";
 
 /***/ }),
 
@@ -71,7 +71,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "nav {\n  -webkit-app-region: drag; }\n", ""]);
+exports.push([module.i, "nav {\n  -webkit-app-region: drag; }\n\n.nav-logo {\n  height: 40px;\n  width: 40px; }\n\n.info-logo {\n  height: 100px;\n  width: 100px; }\n\n.modal-body {\n  -ms-flex-line-pack: center;\n      align-content: center;\n  text-align: center; }\n", ""]);
 
 // exports
 
@@ -89,6 +89,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_electron_service__ = __webpack_require__("./src/app/providers/electron.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__("./node_modules/@ngx-translate/core/@ngx-translate/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__ = __webpack_require__("./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -101,10 +102,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(electronService, translate) {
+    function AppComponent(electronService, translate, modalService) {
         this.electronService = electronService;
         this.translate = translate;
+        this.modalService = modalService;
         translate.setDefaultLang('en');
         if (electronService.isElectron()) {
             console.log('Mode electron');
@@ -117,6 +120,25 @@ var AppComponent = /** @class */ (function () {
             console.log('Mode web');
         }
     }
+    AppComponent.prototype.open = function (content) {
+        var _this = this;
+        this.modalService.open(content).result.then(function (result) {
+            _this.closeResult = "Closed with: " + result;
+        }, function (reason) {
+            _this.closeResult = "Dismissed " + _this.getDismissReason(reason);
+        });
+    };
+    AppComponent.prototype.getDismissReason = function (reason) {
+        if (reason === __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["a" /* ModalDismissReasons */].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["a" /* ModalDismissReasons */].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return "with: " + reason;
+        }
+    };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-root',
@@ -124,7 +146,8 @@ var AppComponent = /** @class */ (function () {
             styles: [__webpack_require__("./src/app/app.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_electron_service__["a" /* ElectronService */],
-            __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */]])
+            __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__["c" /* TranslateService */],
+            __WEBPACK_IMPORTED_MODULE_3__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -199,7 +222,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_5__angular_forms__["b" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_7__app_routing_module__["a" /* AppRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_14__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_14__ng_bootstrap_ng_bootstrap__["c" /* NgbModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_15_ng2_smart_table__["a" /* Ng2SmartTableModule */],
                 __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__["b" /* TranslateModule */].forRoot({
                     loader: {
@@ -223,7 +246,7 @@ var AppModule = /** @class */ (function () {
 /***/ "./src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Page Content -->\n<div class=\"container\">\n\n  <div class=\"row\">\n\n    <div class=\"col-md-4 col-lg-4\">\n      <h1 class=\"my-4\">Datasets</h1>\n      <div class=\"list-group\">\n        <a href=\"#\" class=\"list-group-item active\">Dataset 1</a>\n        <a href=\"#\" class=\"list-group-item\">Dataset 2</a>\n        <a href=\"#\" class=\"list-group-item\">Dataset 3</a>\n      </div>\n    </div>\n    <!-- /.col-lg-3 -->\n\n    <div class=\"col-md-8 col-lg-8\">\n      <div class=\"my-4\">\n        <ngb-tabset type=\"pills\">\n          <!-- Data Content -->\n          <ngb-tab title=\"Data\">\n            <ng-template ngbTabContent>\n              <hr>\n              <form>\n                <div class=\"form-group\">\n                  <label for=\"exampleInputEmail1\">Title</label>\n                  <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter the title\">\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">Use the title to match the result.</small>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 1</label>\n                  <select class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The first entry of the data.</small>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 2</label>\n                  <select class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The second entry of the data.</small>\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"exampleSelect1\">Output</label>\n                    <select class=\"form-control\" id=\"exampleSelect1\">\n                      <option>0</option>\n                      <option>1</option>\n                    </select>\n                    <small id=\"emailHelp\" class=\"form-text text-muted\">The result of the data.</small>\n                  </div>\n                <hr>\n                <button type=\"submit\" class=\"btn btn-success\">Save Data</button>\n              </form>\n              <br>\n              <!--/end of content-->\n            </ng-template>\n          </ngb-tab>\n          <ngb-tab title=\"Train\">\n            <ng-template ngbTabContent>\n              <!-- Train Content -->\n              <hr>\n              <ng2-smart-table [settings]=\"settings\" [source]=\"data\"></ng2-smart-table>\n              <hr>\n                <button type=\"submit\" class=\"btn btn-success\">Train Data</button>\n                <br>\n              <!--/end of content-->\n            </ng-template>\n          </ngb-tab>\n          <ngb-tab title=\"Test\">\n            <ng-template ngbTabContent>\n              <!-- Test Content -->\n              <hr>\n              <form>\n              <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 1</label>\n                  <select name=\"input1\" [(ngModel)]=\"input1\" class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The first entry of the data.</small>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 2</label>\n                  <select name=\"input2\" [(ngModel)]=\"input2\" class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The second entry of the data.</small>\n                </div>\n                <hr>\n                <button type=\"submit\" class=\"btn btn-success\" (click)=\"showResult()\">Show the result</button><br><br>\n              </form>\n              <form>\n                  <div class=\"form-group\">\n                      <label for=\"exampleInputEmail1\">Result</label>\n                      <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"{{output}}\" disabled>\n                      <small id=\"emailHelp\" class=\"form-text text-muted\">This information is based in the train data.</small>\n                    </div>\n              </form>\n              <!-- /end of content-->\n            </ng-template>\n          </ngb-tab>\n        </ngb-tabset>\n\n      </div>\n      <!-- /.card -->\n    </div>\n    <!-- /.col-lg-9 -->\n\n  </div>\n\n</div>\n<!-- /.container -->";
+module.exports = "<!-- Page Content -->\n<div class=\"container\">\n\n  <div class=\"row\">\n\n    <div class=\"col-md-4 col-lg-4\">\n      <h1 class=\"my-4\">Datasets</h1>\n      <div class=\"list-group\">\n        <a href=\"#\" class=\"list-group-item active\">Dataset 1</a>\n        <a href=\"#\" class=\"list-group-item\">Dataset 2</a>\n        <a href=\"#\" class=\"list-group-item\">Dataset 3</a>\n      </div>\n      <br>\n      <button class=\"btn btn-primary btn-plus btn-right\" (click)=\"open(content)\"><i class=\"fas fa-plus\"></i></button>\n    </div>\n    <!-- /.col-lg-3 -->\n\n    <div class=\"col-md-8 col-lg-8\">\n      <div class=\"my-4\">\n        <ngb-tabset type=\"pills\">\n          <!-- Data Content -->\n          <ngb-tab title=\"Data\">\n            <ng-template ngbTabContent>\n              <hr>\n              <form>\n                <div class=\"form-group\">\n                  <label for=\"exampleInputEmail1\">Title</label>\n                  <input name=\"title\" [(ngModel)]=\"title\" type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter the title\">\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">Use the title to match the result.</small>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 1</label>\n                  <select name=\"input1\" [(ngModel)]=\"input1\" class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The first entry of the data.</small>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 2</label>\n                  <select name=\"input2\" [(ngModel)]=\"input2\" class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The second entry of the data.</small>\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"exampleSelect1\">Output</label>\n                    <select name=\"output\" [(ngModel)]=\"output\" class=\"form-control\" id=\"exampleSelect1\">\n                      <option>0</option>\n                      <option>1</option>\n                    </select>\n                    <small id=\"emailHelp\" class=\"form-text text-muted\">The result of the data.</small>\n                  </div>\n                <hr>\n                <button type=\"submit\" class=\"btn btn-success btn-right\" (click)=\"addData()\">Save Data</button>\n              </form>\n              <br>\n              <!--/end of content-->\n            </ng-template>\n          </ngb-tab>\n          <ngb-tab title=\"Train\">\n            <ng-template ngbTabContent>\n              <!-- Train Content -->\n              <hr>\n              <ng2-smart-table [settings]=\"settings\" [source]=\"data\"></ng2-smart-table>\n              <hr>\n                <button type=\"submit\" class=\"btn btn-success btn-right\" (click)=\"trainData()\">Train Data</button>\n                <br>\n              <!--/end of content-->\n            </ng-template>\n          </ngb-tab>\n          <ngb-tab title=\"Test\">\n            <ng-template ngbTabContent>\n              <!-- Test Content -->\n              <hr>\n              <form>\n              <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 1</label>\n                  <select name=\"input1\" [(ngModel)]=\"input1\" class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The first entry of the data.</small>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"exampleSelect1\">Input 2</label>\n                  <select name=\"input2\" [(ngModel)]=\"input2\" class=\"form-control\" id=\"exampleSelect1\">\n                    <option>0</option>\n                    <option>1</option>\n                  </select>\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">The second entry of the data.</small>\n                </div>\n                <hr>\n                <button type=\"submit\" class=\"btn btn-success btn-right\" (click)=\"showResult()\">Show the result</button><br><br>\n              </form>\n              <form>\n                  <div class=\"form-group\">\n                      <label for=\"exampleInputEmail1\">Result</label>\n                      <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"{{output}}\" disabled>\n                      <small id=\"emailHelp\" class=\"form-text text-muted\">This information is based in the train data.</small>\n                    </div>\n              </form>\n              <!-- /end of content-->\n            </ng-template>\n          </ngb-tab>\n        </ngb-tabset>\n\n      </div>\n      <!-- /.card -->\n    </div>\n    <!-- /.col-lg-9 -->\n\n  </div>\n\n</div>\n<!-- /.container -->\n\n<!-- Info Modal --> \n\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\n    <div class=\"modal-header\">\n      <h4 class=\"modal-title\">New Dataset</h4>\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\n        <span aria-hidden=\"true\">&times;</span>\n      </button>\n    </div>\n    <div class=\"modal-body\">\n        <form>\n            <div class=\"form-group\">\n              <label for=\"exampleInputEmail1\">Name</label>\n              <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter the title\">\n              <small id=\"emailHelp\" class=\"form-text text-muted\">The name defined for the dataset.</small>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"exampleInputEmail1\">Description</label>\n                <textarea type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter the description\"></textarea>\n                <small id=\"emailHelp\" class=\"form-text text-muted\">Some description about the dataset.</small>\n              </div>\n            </form>\n    </div>\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"c('Close click')\">Save Dataset</button>\n      <button type=\"button\" class=\"btn btn-dark\" (click)=\"c('Close click')\">Close</button>\n    </div>\n  </ng-template>\n\n<!-- / close modal -->";
 
 /***/ }),
 
@@ -235,7 +258,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.container {\n  height: 100%;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  /* pour anciens Chrome et Safari */\n  background-size: cover;\n  /* version standardisée */ }\n  .container .title {\n    color: white;\n    margin: 0;\n    padding: 50px 20px; }\n\n.btn {\n  float: right; }\n\n:host /deep/ * {\n  font-family: \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; }\n\n:host /deep/ table {\n  color: #606c71; }\n  :host /deep/ table tr td, :host /deep/ table tr th {\n    border: 1px solid #e9ebec; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.container {\n  height: 100%;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  /* pour anciens Chrome et Safari */\n  background-size: cover;\n  /* version standardisée */ }\n  .container .title {\n    color: white;\n    margin: 0;\n    padding: 50px 20px; }\n\n.btn-plus {\n  border-radius: 50%; }\n\n.btn-right {\n  float: right; }\n\n:host /deep/ * {\n  font-family: \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; }\n\n:host /deep/ table {\n  color: #606c71; }\n  :host /deep/ table tr td, :host /deep/ table tr th {\n    border: 1px solid #e9ebec; }\n", ""]);
 
 // exports
 
@@ -251,6 +274,9 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ng_bootstrap_ng_bootstrap__ = __webpack_require__("./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2__ = __webpack_require__("./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_sweetalert2__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -261,9 +287,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var brain = __webpack_require__("./node_modules/brain/lib/brain.js");
+
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent() {
+    function HomeComponent(modalService) {
+        this.modalService = modalService;
         // Settings to datatable
         this.settings = {
             actions: {
@@ -279,45 +308,83 @@ var HomeComponent = /** @class */ (function () {
                 title: {
                     title: 'Title'
                 },
-                output1: {
-                    title: 'Output 1'
+                input1: {
+                    title: 'Input 1'
                 },
-                output2: {
-                    title: 'Output 2'
+                input2: {
+                    title: 'Input 2'
+                },
+                output: {
+                    title: 'Output'
                 }
             }
         };
         // Data to set datatable
-        this.data = [
-            {
-                title: "Plant 1",
-                output1: 1,
-                output2: 0
-            },
-            {
-                title: "Plant 1",
-                output1: 0,
-                output2: 1
-            },
-            {
-                title: "Plant 2",
-                output1: 0,
-                output2: 0
-            }
-        ];
+        this.data = [];
+        this.title = "";
         this.input1 = 0;
         this.input2 = 0;
         this.output = 0;
+        this.trained = false;
         this.net = new brain.NeuralNetwork();
-        this.net.train([{ input: [0, 0], output: [0] },
-            { input: [0, 1], output: [1] },
-            { input: [1, 0], output: [1] },
-            { input: [1, 1], output: [0] }]);
     }
     HomeComponent.prototype.ngOnInit = function () {
     };
+    HomeComponent.prototype.addData = function () {
+        if (this.title == "") {
+            __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default()('Data incomplete', 'Your data is incomplete', 'error');
+        }
+        else {
+            this.data.push({
+                title: this.title,
+                input1: this.input1,
+                input2: this.input2,
+                output: this.output
+            });
+            __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default()('Data saved', 'Your data is ready to train', 'success');
+        }
+    };
+    HomeComponent.prototype.trainData = function () {
+        var training = [];
+        for (var i = 0; i < this.data.length; i++) {
+            training.push({
+                input: [this.data[i].input1,
+                    this.data[i].input2],
+                output: [this.data[i].output]
+            });
+        }
+        this.net.train(training);
+        __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default()('Data trained', 'Your data is ready to test', 'success');
+        this.trained = true;
+    };
     HomeComponent.prototype.showResult = function () {
-        this.output = this.net.run([this.input1, this.input2]);
+        if (!this.trained) {
+            __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default()('Data not trained', 'Your data needs to be trained', 'error');
+        }
+        else {
+            this.output = Math.round(this.net.run([this.input1, this.input2]));
+        }
+    };
+    HomeComponent.prototype.open = function (content) {
+        var _this = this;
+        this.modalService.open(content, {
+            size: 'lg'
+        }).result.then(function (result) {
+            _this.closeResult = "Closed with: " + result;
+        }, function (reason) {
+            _this.closeResult = "Dismissed " + _this.getDismissReason(reason);
+        });
+    };
+    HomeComponent.prototype.getDismissReason = function (reason) {
+        if (reason === __WEBPACK_IMPORTED_MODULE_1__ng_bootstrap_ng_bootstrap__["a" /* ModalDismissReasons */].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === __WEBPACK_IMPORTED_MODULE_1__ng_bootstrap_ng_bootstrap__["a" /* ModalDismissReasons */].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return "with: " + reason;
+        }
     };
     HomeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -325,7 +392,7 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/home/home.component.html"),
             styles: [__webpack_require__("./src/app/components/home/home.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ng_bootstrap_ng_bootstrap__["b" /* NgbModal */]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -401,6 +468,13 @@ var ElectronService = /** @class */ (function () {
 }());
 
 
+
+/***/ }),
+
+/***/ "./src/assets/icons/NEUROSETS-LOGO.png":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "src/assets/icons/NEUROSETS-LOGO.png";
 
 /***/ }),
 

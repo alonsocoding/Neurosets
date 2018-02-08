@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 const brain = require('brain');
+import swal from 'sweetalert2'
 
 @Component({
   selector: 'app-home',
@@ -25,61 +27,119 @@ export class HomeComponent implements OnInit {
       title: {
         title: 'Title'
       },
-      output1: {
-        title: 'Output 1'
+      input1: {
+        title: 'Input 1'
       },
-      output2: {
-        title: 'Output 2'
+      input2: {
+        title: 'Input 2'
+      },
+      output: {
+        title: 'Output'
       }
     }
   };
 
   // Data to set datatable
 
-  data = [
-    {
-      title: "Plant 1",
-      output1: 1,
-      output2: 0
-    },
-    {
-      title: "Plant 1",
-      output1: 0,
-      output2: 1
-    },
-    
-    {
-      title: "Plant 2",
-      output1: 0,
-      output2: 0
-    }
-  ];
+  public data = [];
 
+  closeResult: string;
+
+  // Neural Network
   public net;
-  public output;
-  public input1;
-  public input2;
 
-  constructor() {
+  // Input and Output 
+  public title: string;
+  public output: number;
+  public input1: number;
+  public input2: number;
+  public trained: boolean;
 
+  constructor(private modalService: NgbModal) {
+
+    this.title = "";
     this.input1 = 0;
     this.input2 = 0;
     this.output = 0;
+    this.trained = false;
 
     this.net = new brain.NeuralNetwork();
-
-    this.net.train([{input: [0, 0], output: [0]},  
-           {input: [0, 1], output: [1]},
-           {input: [1, 0], output: [1]},
-           {input: [1, 1], output: [0]}]);
   }
 
   ngOnInit() {
 
   }
 
+  addData() {
+    if (this.title == "") {
+      swal(
+        'Data incomplete',
+        'Your data is incomplete',
+        'error'
+      );
+    } else {
+      this.data.push({
+        title: this.title,
+        input1: this.input1,
+        input2: this.input2,
+        output: this.output
+      });
+      swal(
+        'Data saved',
+        'Your data is ready to train',
+        'success'
+      );
+    }
+  }
+
+  trainData() {
+    var training = [];
+    for (var i = 0; i < this.data.length; i++) {
+      training.push({
+        input: [this.data[i].input1,
+        this.data[i].input2],
+        output: [this.data[i].output]
+      });
+    }
+    this.net.train(training);
+    swal(
+      'Data trained',
+      'Your data is ready to test',
+      'success'
+    );
+    this.trained = true;
+  }
+
   showResult() {
-    this.output = this.net.run([this.input1, this.input2]); 
+    if (!this.trained) {
+      swal(
+        'Data not trained',
+        'Your data needs to be trained',
+        'error'
+      );
+    } else {
+      this.output = Math.round(this.net.run([this.input1, this.input2]));
+    }
+  }
+
+  open(content) {
+    this.modalService.open(content,  {
+      size: 'lg'
+    }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
 

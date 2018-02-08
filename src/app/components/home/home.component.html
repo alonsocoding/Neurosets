@@ -10,6 +10,8 @@
         <a href="#" class="list-group-item">Dataset 2</a>
         <a href="#" class="list-group-item">Dataset 3</a>
       </div>
+      <br>
+      <button class="btn btn-primary btn-plus btn-right" (click)="open(content)"><i class="fas fa-plus"></i></button>
     </div>
     <!-- /.col-lg-3 -->
 
@@ -23,12 +25,12 @@
               <form>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Title</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the title">
+                  <input name="title" [(ngModel)]="title" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the title">
                   <small id="emailHelp" class="form-text text-muted">Use the title to match the result.</small>
                 </div>
                 <div class="form-group">
                   <label for="exampleSelect1">Input 1</label>
-                  <select class="form-control" id="exampleSelect1">
+                  <select name="input1" [(ngModel)]="input1" class="form-control" id="exampleSelect1">
                     <option>0</option>
                     <option>1</option>
                   </select>
@@ -36,7 +38,7 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleSelect1">Input 2</label>
-                  <select class="form-control" id="exampleSelect1">
+                  <select name="input2" [(ngModel)]="input2" class="form-control" id="exampleSelect1">
                     <option>0</option>
                     <option>1</option>
                   </select>
@@ -44,14 +46,14 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleSelect1">Output</label>
-                    <select class="form-control" id="exampleSelect1">
+                    <select name="output" [(ngModel)]="output" class="form-control" id="exampleSelect1">
                       <option>0</option>
                       <option>1</option>
                     </select>
                     <small id="emailHelp" class="form-text text-muted">The result of the data.</small>
                   </div>
                 <hr>
-                <button type="submit" class="btn btn-success">Save Data</button>
+                <button type="submit" class="btn btn-success btn-right" (click)="addData()">Save Data</button>
               </form>
               <br>
               <!--/end of content-->
@@ -63,7 +65,7 @@
               <hr>
               <ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
               <hr>
-                <button type="submit" class="btn btn-success">Train Data</button>
+                <button type="submit" class="btn btn-success btn-right" (click)="trainData()">Train Data</button>
                 <br>
               <!--/end of content-->
             </ng-template>
@@ -90,7 +92,7 @@
                   <small id="emailHelp" class="form-text text-muted">The second entry of the data.</small>
                 </div>
                 <hr>
-                <button type="submit" class="btn btn-success" (click)="showResult()">Show the result</button><br><br>
+                <button type="submit" class="btn btn-success btn-right" (click)="showResult()">Show the result</button><br><br>
               </form>
               <form>
                   <div class="form-group">
@@ -113,3 +115,34 @@
 
 </div>
 <!-- /.container -->
+
+<!-- Info Modal --> 
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">New Dataset</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the title">
+              <small id="emailHelp" class="form-text text-muted">The name defined for the dataset.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Description</label>
+                <textarea type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the description"></textarea>
+                <small id="emailHelp" class="form-text text-muted">Some description about the dataset.</small>
+              </div>
+            </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="c('Close click')">Save Dataset</button>
+      <button type="button" class="btn btn-dark" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>
+
+<!-- / close modal -->

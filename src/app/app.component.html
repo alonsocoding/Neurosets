@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Neurosets</a>
+            <a class="navbar-brand" href="#"><img class="nav-logo" src="../assets/icons/NEUROSETS-LOGO.png">Neurosets</a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-info-circle fa-lg"></i></a>
+                    <a class="nav-link" href="#" (click)="open(content)"><i class="fas fa-info-circle fa-lg"></i></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fab fa-github fa-lg"></i></a>
@@ -27,7 +27,29 @@
 <!-- Footer -->
 <footer class="py-4 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; alonsocoding 2018</p>
+        <p class="m-0 text-center text-white">Developed by alonsocoding 2018</p>
     </div>
     <!-- /.container -->
 </footer>
+
+<!-- Info Modal --> 
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Information</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <img class="info-logo" src="../assets/icons/NEUROSETS-LOGO.png">
+      <h4>Neurosets v1.0.0</h4>
+      <p>Neural Networks multi-platform application</p>
+      <p>Developed by alonsocoding 2018</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-dark" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>
+
+<!-- / close modal -->
