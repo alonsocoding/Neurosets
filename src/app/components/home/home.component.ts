@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 const brain = require('brain');
 import swal from 'sweetalert2'
@@ -40,13 +40,19 @@ export class HomeComponent implements OnInit {
   };
 
   // Data to set datatable
-
   public data = [];
+
+  // Array for datasets
+  public datasets = [];
 
   closeResult: string;
 
   // Neural Network
   public net;
+
+  // Info about dataset
+  public titledata: string;
+  public descriptiondata: string;
 
   // Input and Output 
   public title: string;
@@ -92,6 +98,24 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  addDataset() {
+    if (this.titledata == "" || this.descriptiondata == "") {
+      swal(
+        'Dataset incomplete',
+        'Your dataset is incomplete',
+        'error'
+      );
+    } else {
+      this.datasets.push({ name: this.titledata,
+         description: this.descriptiondata });
+      swal(
+        'Dataset saved',
+        'Your dataset is ready to work',
+        'success'
+      );
+    }
+  }
+
   trainData() {
     var training = [];
     for (var i = 0; i < this.data.length; i++) {
@@ -123,7 +147,7 @@ export class HomeComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content,  {
+    this.modalService.open(content, {
       size: 'lg'
     }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -138,7 +162,7 @@ export class HomeComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 

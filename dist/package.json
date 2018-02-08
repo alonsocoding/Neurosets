@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "2.6.0",
-  "description": "Angular 5 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "neurosets",
+  "version": "1.0.0",
+  "description": "Multiplatform neural network application",
+  "homepage": "https://github.com/alonsocoding/Neurosets",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Jose Delgado Matamoros",
+    "email": "alonsodelm@gmail.com"
   },
   "keywords": [
     "angular",
@@ -42,7 +42,8 @@
     "bootstrap": "^4.0.0",
     "brain": "^0.7.0",
     "jquery": "^3.3.1",
-    "ng2-smart-table": "^1.2.2"
+    "ng2-smart-table": "^1.2.2",
+    "sweetalert2": "^7.10.0"
   },
   "devDependencies": {
     "@angular/common": "5.2.0",

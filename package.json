@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "2.6.0",
-  "description": "Angular 5 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "neurosets",
+  "version": "1.0.0",
+  "description": "Multiplatform neural network application",
+  "homepage": "https://github.com/alonsocoding/Neurosets",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Jose Delgado Matamoros",
+    "email": "alonsodelm@gmail.com"
   },
   "keywords": [
     "angular",
